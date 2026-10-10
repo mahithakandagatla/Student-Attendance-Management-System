@@ -1,23 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Students</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students – Student Attendance Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Style.css">
   <link rel="stylesheet" href="students.css">
 </head>
 <body>
-  <h2>Student Management</h2>
+  <div class="app">
 
-  <input type="text" id="rollNo" placeholder="Roll No">
-  <input type="text" id="name" placeholder="Name">
-  <button onclick="addStudent()">Add Student</button>
+    <!-- ============ Sidebar (same as Dashboard) ============ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="brand-mark">A</span>
+        <span>AttendTrack</span>
+      </div>
 
-  <table>
-    <thead>
-      <tr><th>Roll No</th><th>Name</th><th>Action</th></tr>
-    </thead>
-    <tbody id="studentTable"></tbody>
-  </table>
+      <ul class="nav">
+        <li class="nav-label">Menu</li>
+        <li>
+          <a href="Dashboard.html">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+            Dashboard
+          </a>
+        </li>
+        <li data-role="faculty">
+          <a href="students.html" class="active">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.4c2.2.7 3.5 2.6 3.5 5.6"/></svg>
+            Students
+          </a>
+        </li>
+        <li data-role="faculty">
+          <a href="attendance.html">
+            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="17" rx="2"/><path d="M8 2.5v3M16 2.5v3M8 13l2.5 2.5L16 10"/></svg>
+            Mark Attendance
+          </a>
+        </li>
+        <li data-role="faculty">
+          <a href="reports.html">
+            <svg viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h7"/></svg>
+            Reports
+          </a>
+        </li>
+        <li data-role="student">
+          <a href="my-attendance.html">
+            <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+            My Attendance
+          </a>
+        </li>
+      </ul>
 
+      <div class="sidebar-foot">
+        <div id="sideUser">Signed in</div>
+        <button class="logout-btn" id="logoutBtn">Sign out</button>
+      </div>
+    </aside>
+
+    <!-- ============ Main content ============ -->
+    <div class="content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-btn" id="menuBtn" aria-label="Open menu">&#9776;</button>
+          <div>
+            <h1>Students</h1>
+            <div class="date" id="todayDate"></div>
+          </div>
+        </div>
+        <div class="user-chip">
+          <div class="who" style="text-align:right">
+            <div class="name" id="userName">User</div>
+            <div class="role" id="userRole">faculty</div>
+          </div>
+          <div class="avatar" id="userAvatar">U</div>
+        </div>
+      </header>
+
+      <main class="page">
+        <div class="notice" id="notice"></div>
+
+        <!-- Add student -->
+        <section>
+          <div class="section-title"><h3>Add a student</h3></div>
+          <div class="panel add-form">
+            <div class="fld"><label for="fId">Student ID</label><input id="fId" type="number" min="1" placeholder="e.g. 175"></div>
+            <div class="fld"><label for="fName">Name</label><input id="fName" placeholder="Full name"></div>
+            <div class="fld"><label for="fDept">Department</label><input id="fDept" placeholder="e.g. CSE"></div>
+            <div class="fld"><label for="fYear">Year</label><input id="fYear" type="number" min="1" max="4" placeholder="1-4"></div>
+            <div class="fld"><label for="fSection">Section</label><input id="fSection" placeholder="e.g. A"></div>
+            <div class="fld"><button class="btn btn-primary btn-auto" id="addBtn">Add student</button></div>
+          </div>
+        </section>
+
+        <!-- Search + list -->
+        <section>
+          <div class="section-title"><h3>All students</h3><span class="count" id="count"></span></div>
+          <div class="toolbar">
+            <input class="grow" id="search" type="search" placeholder="Search by ID or name…">
+          </div>
+          <div class="panel scroll">
+            <table>
+              <thead>
+                <tr><th>Student ID</th><th>Name</th><th>Department</th><th>Year</th><th>Section</th></tr>
+              </thead>
+              <tbody id="studentBody">
+                <tr><td colspan="5" class="empty">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="Config.js"></script>
   <script src="students.js"></script>
 </body>
 </html>
