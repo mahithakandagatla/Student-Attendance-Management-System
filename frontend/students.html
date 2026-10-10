@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Students</title>
+  <link rel="stylesheet" href="students.css">
+</head>
+<body>
+  <h2>Student Management</h2>
+
+  <input type="text" id="rollNo" placeholder="Roll No">
+  <input type="text" id="name" placeholder="Name">
+  <button onclick="addStudent()">Add Student</button>
+
+  <table>
+    <thead>
+      <tr><th>Roll No</th><th>Name</th><th>Action</th></tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+  </table>
+
+  <script src="students.js"></script>
+</body>
+</html>
