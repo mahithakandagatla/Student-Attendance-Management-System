@@ -1,14 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign in – Student Attendance Management System</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Correct CSS path -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="login-page">
 
@@ -20,7 +29,12 @@
 
       <div class="aside-copy">
         <h1>Attendance, kept simple.</h1>
-        <p>Record classes, track percentages and spot low attendance early, all in one place.</p>
+
+        <p>
+          Record classes, track percentages and spot low attendance early,
+          all in one place.
+        </p>
+
         <ul class="aside-points">
           <li>Faculty mark attendance subject by subject</li>
           <li>Students check their own percentage anytime</li>
@@ -28,49 +42,105 @@
         </ul>
       </div>
 
-      <div class="aside-foot">Student Attendance Management System</div>
+      <div class="aside-foot">
+        Student Attendance Management System
+      </div>
     </aside>
 
     <main class="login-main">
       <form class="login-card" id="loginForm" novalidate>
+
         <h2>Welcome back</h2>
         <p class="sub">Sign in to continue to your dashboard.</p>
 
-        <div class="role-switch" role="tablist" aria-label="Sign in as">
-          <button type="button" class="active" data-role="faculty" role="tab" aria-selected="true">Faculty</button>
-          <button type="button" data-role="student" role="tab" aria-selected="false">Student</button>
+        <div
+          class="role-switch"
+          role="tablist"
+          aria-label="Sign in as"
+        >
+          <button
+            type="button"
+            class="active"
+            data-role="faculty"
+            role="tab"
+            aria-selected="true"
+          >
+            Faculty
+          </button>
+
+          <button
+            type="button"
+            data-role="student"
+            role="tab"
+            aria-selected="false"
+          >
+            Student
+          </button>
         </div>
 
-        <div class="form-error" id="formError" role="alert"></div>
+        <div
+          class="form-error"
+          id="formError"
+          role="alert"
+        ></div>
 
         <div class="field">
-          <label for="username" id="usernameLabel">Faculty ID / Username</label>
-          <input type="text" id="username" autocomplete="username" autofocus>
+          <label for="username" id="usernameLabel">
+            Faculty ID / Username
+          </label>
+
+          <input
+            type="text"
+            id="username"
+            autocomplete="username"
+            autofocus
+          >
         </div>
 
         <div class="field">
           <label for="password">Password</label>
+
           <div class="input-wrap">
-            <input type="password" id="password" autocomplete="current-password">
-            <button type="button" class="toggle-pw" id="togglePw">Show</button>
+            <input
+              type="password"
+              id="password"
+              autocomplete="current-password"
+            >
+
+            <button
+              type="button"
+              class="toggle-pw"
+              id="togglePw"
+            >
+              Show
+            </button>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" id="loginBtn">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          id="loginBtn"
+        >
           <span class="spinner"></span>
           <span id="loginBtnText">Sign in</span>
         </button>
 
         <p class="demo-note" id="demoNote" hidden>
-          Demo mode: faculty <code>faculty</code> / <code>faculty123</code>,
-          student <code>S101</code> / <code>student123</code>
+          Demo mode: faculty
+          <code>faculty</code> / <code>faculty123</code>,
+          student
+          <code>S101</code> / <code>student123</code>
         </p>
+
       </form>
     </main>
 
   </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/login.js"></script>
+  <!-- Correct JavaScript paths -->
+  <script src="config.js"></script>
+  <script src="login.js"></script>
+
 </body>
 </html>

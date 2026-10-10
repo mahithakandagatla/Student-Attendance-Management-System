@@ -80,7 +80,7 @@
       // Expected backend response: { token, name, role, studentId }
       const data = CONFIG.DEMO_MODE
         ? await demoLogin(username, password)
-        : await apiFetch('/auth/login', {
+        : await apiFetch('/login', {
             method: 'POST',
             body: JSON.stringify({ username: username, password: password, role: role })
           });

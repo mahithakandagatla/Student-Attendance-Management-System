@@ -1,0 +1,252 @@
+
+/* ===== General Page Styling ===== */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f6fb;
+  color: #263247;
+}
+
+/* ===== Header ===== */
+header {
+  background: #243b67;
+  color: #ffffff;
+  padding: 25px 40px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+header p {
+  margin: 0;
+  color: #dce6f7;
+  font-size: 14px;
+}
+
+/* ===== Main Content ===== */
+.container {
+  max-width: 1200px;
+  margin: 35px auto;
+  padding: 0 24px;
+}
+
+.container h2 {
+  margin-bottom: 10px;
+  color: #243b67;
+  font-size: 25px;
+}
+
+.container > p {
+  color: #68758a;
+  line-height: 1.6;
+}
+
+/* ===== Search Panel ===== */
+.report-search {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e4eaf3;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(35, 59, 103, 0.05);
+}
+
+.report-search label {
+  margin-top: 8px;
+  color: #263b60;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ===== Student ID, Date, and Status Inputs ===== */
+.report-search input,
+.report-search select {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 400px;
+  min-height: 44px;
+  padding: 11px 13px;
+  border: 1px solid #ccd5e3;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #263247;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-search input:focus,
+.report-search select:focus {
+  border-color: #3868b2;
+  box-shadow: 0 0 0 3px rgba(56, 104, 178, 0.12);
+}
+
+/* ===== Search and Show All Buttons ===== */
+.search-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.search-controls button {
+  min-height: 44px;
+  padding: 11px 22px;
+  border: none;
+  border-radius: 7px;
+  background: #2f5da8;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.search-controls button:hover {
+  background: #204781;
+  transform: translateY(-1px);
+}
+
+.search-controls button:focus-visible {
+  outline: 3px solid #9dbcf0;
+  outline-offset: 2px;
+}
+
+/* Show All Button */
+#showAllBtn {
+  background: #e8edf5;
+  color: #263b60;
+}
+
+#showAllBtn:hover {
+  background: #d8e1ef;
+}
+
+/* ===== Report Message ===== */
+#reportMessage {
+  margin: 22px 0;
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: #e7effd;
+  color: #244b86;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== Attendance Table Container ===== */
+#reportContent {
+  overflow-x: auto;
+  margin-top: 15px;
+  background: #ffffff;
+  border: 1px solid #e4eaf3;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(35, 59, 103, 0.07);
+}
+
+/* ===== Attendance Table ===== */
+#reportContent table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+#reportContent thead {
+  background: #243b67;
+  color: #ffffff;
+}
+
+#reportContent th {
+  padding: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+#reportContent td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #edf0f5;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+#reportContent tbody tr:nth-child(even) {
+  background: #f8faff;
+}
+
+#reportContent tbody tr:hover {
+  background: #edf4ff;
+}
+
+#reportContent tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== Back to Dashboard Link ===== */
+.container > p:last-child {
+  margin-top: 28px;
+}
+
+.container > p:last-child a {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 7px;
+  background: #243b67;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.container > p:last-child a:hover {
+  background: #34558d;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 600px) {
+  header {
+    padding: 22px;
+  }
+
+  header h1 {
+    font-size: 23px;
+  }
+
+  .container {
+    margin: 24px auto;
+    padding: 0 14px;
+  }
+
+  .report-search {
+    padding: 16px;
+  }
+
+  .report-search input,
+  .report-search select {
+    max-width: 100%;
+  }
+
+  .search-controls {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-controls button {
+    width: 100%;
+  }
+
+  #reportContent th,
+  #reportContent td {
+    padding: 12px;
+  }
+}

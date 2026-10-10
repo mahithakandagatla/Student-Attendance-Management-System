@@ -1,5 +1,6 @@
 package attendace_backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,6 +43,20 @@ public class AttendanceController {
     @PostMapping
     public Attendance addAttendance(@RequestBody Attendance attendance) {
         return attendanceService.addAttendance(attendance);
+    }
+
+    // Add attendance for multiple students at once
+    @PostMapping("/bulk")
+    public List<Attendance> addBulkAttendance(
+            @RequestBody List<Attendance> attendanceList) {
+
+        List<Attendance> savedAttendance = new ArrayList<>();
+
+        for (Attendance attendance : attendanceList) {
+            savedAttendance.add(attendanceService.addAttendance(attendance));
+        }
+
+        return savedAttendance;
     }
 
     // Update attendance

@@ -1,105 +1,117 @@
+
 package attendace_backend.service;
-
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 import attendace_backend.entity.Attendance;
 import attendace_backend.repository.AttendanceRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AttendanceService {
 
-    private final AttendanceRepository attendanceRepository;
-
-    public AttendanceService(AttendanceRepository attendanceRepository) {
-        this.attendanceRepository = attendanceRepository;
-    }
+    @Autowired
+    private AttendanceRepository attendanceRepository;
 
     // Get all attendance records
     public List<Attendance> getAllAttendance() {
         return attendanceRepository.findAll();
     }
 
-    // Get attendance by ID
+    // Get attendance record by ID
     public Attendance getAttendanceById(int id) {
-        return attendanceRepository.findById(id).orElse(null);
+        return attendanceRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Attendance record not found with id: " + id
+                ));
     }
 
-    // Add attendance
+    // Add attendance without creating duplicates
     public Attendance addAttendance(Attendance attendance) {
+
+        Optional<Attendance> existing =
+                attendanceRepository.findByStudentIdAndSubjectIdAndDate(
+                        attendance.getStudentId(),
+                        attendance.getSubjectId(),
+                        attendance.getDate()
+                );
+
+        if (existing.isPresent()) {
+            Attendance existingRecord = existing.get();
+
+            // Update the existing record's status
+            existingRecord.setStatus(attendance.getStatus());
+
+            return attendanceRepository.save(existingRecord);
+        }
+
+        // Save only if no matching record exists
         return attendanceRepository.save(attendance);
     }
 
-    // Update attendance
+    // Update attendance record by ID
     public Attendance updateAttendance(int id, Attendance attendance) {
-
-        Attendance existingAttendance =
-                attendanceRepository.findById(id).orElse(null);
-
-        if (existingAttendance != null) {
-
-            existingAttendance.setStudentId(attendance.getStudentId());
-            existingAttendance.setSubjectId(attendance.getSubjectId());
-            existingAttendance.setDate(attendance.getDate());
-            existingAttendance.setStatus(attendance.getStatus());
-
-            return attendanceRepository.save(existingAttendance);
+        if (!attendanceRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Attendance record not found with id: " + id
+            );
         }
 
-        return null;
+        attendance.setAttendanceId(id);
+        return attendanceRepository.save(attendance);
     }
 
-    // Delete attendance
+    // Delete attendance record
     public void deleteAttendance(int id) {
+        if (!attendanceRepository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Attendance record not found with id: " + id
+            );
+        }
+
         attendanceRepository.deleteById(id);
     }
 
-    // Calculate overall attendance percentage
+    // Calculate overall attendance percentage for a student
     public double getAttendancePercentage(int studentId) {
-
-        List<Attendance> attendanceList =
+        List<Attendance> records =
                 attendanceRepository.findByStudentId(studentId);
 
-        if (attendanceList.isEmpty()) {
-            return 0;
+        if (records.isEmpty()) {
+            return 0.0;
         }
 
-        int totalClasses = attendanceList.size();
-        int presentClasses = 0;
+        long presentCount = records.stream()
+                .filter(a -> "Present".equalsIgnoreCase(a.getStatus()))
+                .count();
 
-        for (Attendance attendance : attendanceList) {
-
-            if (attendance.getStatus().equalsIgnoreCase("Present")) {
-                presentClasses++;
-            }
-        }
-
-        return ((double) presentClasses / totalClasses) * 100;
+        return presentCount * 100.0 / records.size();
     }
 
     // Calculate subject-wise attendance percentage
     public double getSubjectAttendancePercentage(
             int studentId, int subjectId) {
 
-        List<Attendance> attendanceList =
+        List<Attendance> records =
                 attendanceRepository.findByStudentIdAndSubjectId(
                         studentId, subjectId);
 
-        if (attendanceList.isEmpty()) {
-            return 0;
+        if (records.isEmpty()) {
+            return 0.0;
         }
 
-        int totalClasses = attendanceList.size();
-        int presentClasses = 0;
+        long presentCount = records.stream()
+                .filter(a -> "Present".equalsIgnoreCase(a.getStatus()))
+                .count();
 
-        for (Attendance attendance : attendanceList) {
-
-            if (attendance.getStatus().equalsIgnoreCase("Present")) {
-                presentClasses++;
-            }
-        }
-
-        return ((double) presentClasses / totalClasses) * 100;
+        return presentCount * 100.0 / records.size();
     }
 }

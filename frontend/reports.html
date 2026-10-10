@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Attendance Reports</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="attendance.css">
+  <link rel="stylesheet" href="reports.css">
+</head>
+
+<body>
+
+  <header>
+    <h1>Attendance Reports</h1>
+    <p>Student Attendance Management System</p>
+  </header>
+
+  <main class="container">
+
+    <h2>Reports</h2>
+    <p>Search attendance records by student ID, date, and status.</p>
+
+    <!-- Search Filters -->
+    <div class="report-search">
+
+      <label for="studentIdSearch">Student ID</label>
+      <input
+        type="number"
+        id="studentIdSearch"
+        placeholder="Enter Student ID"
+        min="1"
+      >
+
+      <label for="attendanceDateSearch">Attendance Date</label>
+      <input
+        type="date"
+        id="attendanceDateSearch"
+      >
+
+      <label for="statusFilter">Attendance Status</label>
+      <select id="statusFilter">
+        <option value="all">All Statuses</option>
+        <option value="Present">Present</option>
+        <option value="Absent">Absent</option>
+      </select>
+
+      <div class="search-controls">
+        <button type="button" id="searchStudentBtn">
+          Search
+        </button>
+
+        <button type="button" id="showAllBtn">
+          Show All
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Result Message -->
+    <div id="reportMessage" role="status">
+      Loading attendance report...
+    </div>
+
+    <!-- Attendance Table -->
+    <div id="reportContent"></div>
+
+    <p>
+      <a href="dashboard.html">Back to Dashboard</a>
+    </p>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="reports.js"></script>
+
+</body>
+</html>

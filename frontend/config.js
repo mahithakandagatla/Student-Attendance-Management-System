@@ -4,7 +4,7 @@
 
 const CONFIG = {
   API_BASE: 'http://localhost:8080/api', // Spring Boot server
-  DEMO_MODE: true,                       // set to false once the backend login API is ready
+  DEMO_MODE: false,                       // set to false once the backend login API is ready
   LOW_ATTENDANCE_THRESHOLD: 75,          // percent
   SESSION_KEY: 'sams_session'
 };
