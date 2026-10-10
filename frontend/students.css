@@ -1,6 +1,30 @@
-body { font-family: Arial; margin: 20px; }
-input { padding: 6px; margin-right: 8px; }
-button { padding: 6px 12px; cursor: pointer; }
-table { border-collapse: collapse; margin-top: 20px; width: 60%; }
-th, td { border: 1px solid #999; padding: 8px; text-align: left; }
-th { background: #eee; }
+/* Extra styles for the Students page only. Shared look comes from Style.css */
+
+.page section { margin-bottom: 28px; }
+
+.add-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  padding: 18px 20px;
+  align-items: end;
+}
+.fld label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+.fld input {
+  width: 100%; padding: 10px 11px; font: inherit; color: var(--ink);
+  background: var(--surface); border: 1px solid #cfc9bc; border-radius: var(--radius);
+}
+.fld input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(29,78,95,.15); }
+.btn-auto { width: 100%; }
+
+.toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.toolbar input {
+  padding: 10px 12px; font: inherit; color: var(--ink);
+  background: var(--surface); border: 1px solid #cfc9bc; border-radius: var(--radius);
+}
+.toolbar .grow { flex: 1; min-width: 220px; }
+.count { color: var(--muted); font-size: 14px; }
+
+/* long list (74+ students): scroll inside the panel, header stays visible */
+.panel.scroll { max-height: 60vh; overflow: auto; }
+.panel.scroll th { position: sticky; top: 0; z-index: 1; }
