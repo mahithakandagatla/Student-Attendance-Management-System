@@ -80,6 +80,11 @@ public class AttendanceService {
         attendanceRepository.deleteById(id);
     }
 
+    // Get all attendance records of one student
+    public List<Attendance> getAttendanceByStudent(int studentId) {
+        return attendanceRepository.findByStudentId(studentId);
+    }
+
     // Calculate overall attendance percentage for a student
     public double getAttendancePercentage(int studentId) {
         List<Attendance> records =

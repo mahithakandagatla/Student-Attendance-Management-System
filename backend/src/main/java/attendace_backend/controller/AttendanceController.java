@@ -77,6 +77,12 @@ public class AttendanceController {
         return "Attendance deleted successfully";
     }
 
+    // Get all attendance records of one student (used by the student's own page)
+    @GetMapping("/student/{studentId}")
+    public List<Attendance> getAttendanceByStudent(@PathVariable int studentId) {
+        return attendanceService.getAttendanceByStudent(studentId);
+    }
+
     // Get overall attendance percentage for a student
     @GetMapping("/percentage/{studentId}")
     public double getAttendancePercentage(@PathVariable int studentId) {

@@ -17,6 +17,12 @@
   if (CONFIG.DEMO_MODE) document.getElementById('demoNote').hidden = false;
 
   /* ---- role switch ---- */
+  function applyRoleLabels() {
+    label.textContent = role === 'faculty' ? 'Faculty ID / Username' : 'Student ID';
+    userInput.placeholder = role === 'faculty' ? 'Your faculty username' : 'Your student ID, e.g. 101';
+  }
+  applyRoleLabels();
+
   roleBtns.forEach(function (btn) {
     btn.addEventListener('click', function () {
       role = btn.dataset.role;
@@ -25,7 +31,7 @@
         b.classList.toggle('active', on);
         b.setAttribute('aria-selected', on);
       });
-      label.textContent = role === 'faculty' ? 'Faculty ID / Username' : 'Student ID';
+      applyRoleLabels();
       clearError();
     });
   });
@@ -49,11 +55,21 @@
     btnText.textContent = on ? 'Signing in…' : 'Sign in';
   }
 
+  /* The users.role column is free text ("Student", "STUDENT", "faculty"...).
+     Map it onto the two roles the pages understand. Anything unrecognised
+     is refused - it is never treated as faculty. */
+  function normalizeRole(value) {
+    const r = String(value || '').trim().toLowerCase();
+    if (r === 'student') return 'student';
+    if (r === 'faculty' || r === 'teacher' || r === 'admin' || r === 'staff') return 'faculty';
+    return null;
+  }
+
   /* ---- demo login (used until the backend login endpoint exists) ---- */
   function demoLogin(username, password) {
     const users = {
       faculty: { faculty: { password: 'faculty123', name: 'Dr. Ramesh Kumar' } },
-      student: { S101:    { password: 'student123', name: 'Anjali Sharma', studentId: 'S101' } }
+      student: { '101':   { password: 'student123', name: 'Anjali Sharma', studentId: 101 } }
     };
     const u = users[role][username];
     if (!u || u.password !== password) throw new Error('Invalid ID or password.');
@@ -77,19 +93,37 @@
 
     setLoading(true);
     try {
-      // Expected backend response: { token, name, role, studentId }
+      // Backend response: { token, name, role, studentId, ... }
       const data = CONFIG.DEMO_MODE
         ? await demoLogin(username, password)
         : await apiFetch('/login', {
             method: 'POST',
-            body: JSON.stringify({ username: username, password: password, role: role })
+            body: JSON.stringify({ username: username, password: password })
           });
+
+      // The role comes from the account, never from the tab that was clicked.
+      const actualRole = normalizeRole(data.role);
+      if (!actualRole) {
+        throw new Error('This account has no valid role. Contact the administrator.');
+      }
+
+      // Separate logins: a student account cannot sign in on the Faculty tab and vice versa.
+      if (actualRole !== role) {
+        throw new Error(actualRole === 'student'
+          ? 'This is a student account. Switch to the Student tab to sign in.'
+          : 'This is a faculty account. Switch to the Faculty tab to sign in.');
+      }
+
+      if (actualRole === 'student' && !data.studentId) {
+        throw new Error('Your account is not linked to a student ID. Contact the administrator.');
+      }
 
       Session.set({
         token: data.token,
-        name: data.name,
-        role: data.role || role,
-        studentId: data.studentId || null
+        name: data.name || data.username || username,
+        username: data.username || username,
+        role: actualRole,
+        studentId: actualRole === 'student' ? Number(data.studentId) : null
       });
       window.location.href = 'dashboard.html';
     } catch (err) {

@@ -1,5 +1,10 @@
 
 (function () {
+  /* ---------- Faculty-only guard ---------- */
+  const session = Session.get();
+  if (!session) { window.location.replace('login.html'); return; }
+  if (session.role !== 'faculty') { window.location.replace('dashboard.html'); return; }
+
   const message = document.getElementById('reportMessage');
   const content = document.getElementById('reportContent');
 
