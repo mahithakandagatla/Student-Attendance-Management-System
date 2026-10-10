@@ -18,7 +18,10 @@ const Session = {
   clear()   { sessionStorage.removeItem(CONFIG.SESSION_KEY); }
 };
 
-/* Wrapper around fetch: adds JSON headers + token, throws on HTTP errors. */
+/* Wrapper around fetch: adds JSON headers + token, throws on HTTP errors.
+   401 = token missing/expired (e.g. the backend was restarted): clear the
+   session and go back to the login page.
+   403 = signed in, but this role is not allowed to do that. */
 async function apiFetch(path, options = {}) {
   const session = Session.get();
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
@@ -26,7 +29,13 @@ async function apiFetch(path, options = {}) {
 
   const res = await fetch(CONFIG.API_BASE + path, { ...options, headers });
   if (!res.ok) {
-    let message = 'Request failed (' + res.status + ')';
+    if (res.status === 401 && session && path !== '/login') {
+      Session.clear();
+      window.location.replace('login.html');
+    }
+    let message = res.status === 403
+      ? 'You do not have permission to do that.'
+      : 'Request failed (' + res.status + ')';
     try { const body = await res.json(); if (body.message) message = body.message; } catch (e) {}
     throw new Error(message);
   }

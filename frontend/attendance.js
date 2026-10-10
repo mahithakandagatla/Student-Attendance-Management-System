@@ -13,14 +13,14 @@
   const session = Session.get();
 
   if (!session) {
-    window.location.replace('Login.html');
+    window.location.replace('login.html');
     return;
   }
 
   const role = session.role === 'student' ? 'student' : 'faculty';
 
   if (role !== 'faculty') {
-    window.location.replace('Dashboard.html');
+    window.location.replace('dashboard.html');
     return;
   }
 
@@ -97,7 +97,7 @@
   if ($('logoutBtn')) {
     $('logoutBtn').addEventListener('click', function () {
       Session.clear();
-      window.location.href = 'Login.html';
+      window.location.href = 'login.html';
     });
   }
 
@@ -317,9 +317,9 @@
     if (summary) {
       summary.textContent =
         list.length +
-        ' students · ' +
+        ' students Â· ' +
         present +
-        ' present · ' +
+        ' present Â· ' +
         (list.length - present) +
         ' absent';
     }
@@ -477,7 +477,7 @@
 
     try {
       if (CONFIG.DEMO_MODE) {
-        console.log('DEMO MODE — attendance was not saved:', records);
+        console.log('DEMO MODE â€” attendance was not saved:', records);
 
         showNotice(
           'Demo mode: ' +

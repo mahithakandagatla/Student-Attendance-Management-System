@@ -1,10 +1,10 @@
 (function () {
   /* ---------- Auth guard (same as Dashboard.js) ---------- */
   const session = Session.get();
-  if (!session) { window.location.replace('Login.html'); return; }
+  if (!session) { window.location.replace('login.html'); return; }
 
   const role = session.role === 'student' ? 'student' : 'faculty';
-  if (role !== 'faculty') { window.location.replace('Dashboard.html'); return; }
+  if (role !== 'faculty') { window.location.replace('dashboard.html'); return; }
 
   const $ = function (id) { return document.getElementById(id); };
 
@@ -28,7 +28,7 @@
   document.querySelector('.content').addEventListener('click', function () { $('sidebar').classList.remove('open'); });
   $('logoutBtn').addEventListener('click', function () {
     Session.clear();
-    window.location.href = 'Login.html';
+    window.location.href = 'login.html';
   });
 
   function showNotice(text) {
